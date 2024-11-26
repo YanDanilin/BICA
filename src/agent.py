@@ -5,12 +5,12 @@ from scipy import stats
 
 
 class Agent:
-    def __init__(self, id: int, r=0.01):
+    def __init__(self, id, r=0.01):
         self.id = id
         self.other_ids = None
         self.r = r
-        self.appraisals = None
-        self.feeling = None
+        self.appraisals = dict()
+        self.feeling = dict()
 
     def set_ids(self, ids_list: set):
         '''
@@ -27,15 +27,6 @@ class Agent:
     def set_id(self, id):
         if self.other_ids is not None and id not in self.appraisals:
             self.appraisals[id] = Appraisal(random_init=True, eps=0.2)
-
-    def set_feelings(self, feelings: dict):
-        '''
-        {
-            id1: F,
-            ...
-        }
-        '''
-        self.feelings = feelings
 
     def set_feeling(self, to_id: int, feeling: Appraisal):
         self.feelings[to_id] = feeling

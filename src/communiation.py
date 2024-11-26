@@ -3,12 +3,18 @@ from appraisal import Appraisal
 from actions import actions
 
 
+def make_relation_matrix(agents_count):
+    pass
+
 agents_count = int(input("Enter agents count: "))
 stop_flag = False
 agents = []
 agents = [Agent(id) for id in range(agents_count)]
 for i in range(agents_count):
     agents[i].set_ids(set(range(agents_count)))
+
+relation_matrix = [[0] * len(agents_count)] * len(agents_count)
+
 
 with open('./logs.csv', 'w+') as logf:
     logf.write('iteration,from_id,to_id,action')
