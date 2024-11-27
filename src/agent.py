@@ -10,7 +10,7 @@ class Agent:
         self.other_ids = None
         self.r = r
         self.appraisals = dict()
-        self.feeling = dict()
+        self.feelings = dict()
 
     def set_ids(self, ids_list: set):
         '''
@@ -40,7 +40,7 @@ class Agent:
             max_likelihood = 0
             for action_name, action in possible_actions.items():
                 prob = stats.norm.pdf(Appraisal.euclidian_dist(
-                    Appraisal(*action['author']) - self.feelings[r_id]))
+                    Appraisal(*action['author']), self.feelings[r_id]))
                 if prob > max_likelihood:
                     max_likelihood = prob
                     res_action = action_name
