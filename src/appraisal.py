@@ -28,11 +28,16 @@ class Appraisal:
         res_vector = self.vector_ * number
         res_appraisal = Appraisal(*list(res_vector))
         return res_appraisal
-    
+
     def __rmul__(self, number):
         res_vector = self.vector_ * number
         res_appraisal = Appraisal(*list(res_vector))
         return res_appraisal
+
+    def __pow__(self, number):
+        res_vector = self.vector_ ** 2
+        return Appraisal(*res_vector)
+
     @staticmethod
     def euclidian_dist(a1, a2):
-        return np.sqrt(np.sum((a1 - a2) ** 2))
+        return np.sqrt(np.sum((a1.vector_ - a2.vector_) ** 2))
