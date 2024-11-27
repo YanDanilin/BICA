@@ -3,11 +3,13 @@ import numpy as np
 
 
 class Appraisal:
-    def __init__(self, *args, random_init=False, eps=0.3):
-        self.categories_ = ['dominance', 'valence', 'trust']
+    def __init__(self, *args, dim=2, random_init=False, eps=0.3):
+        self.categories_ = ['dominance', 'valence']
+        if dim == 3:
+            self.categories_ = ['dominance', 'valence', 'trust']
         self.vector_ = None
         self.values = None
-        if random_init == True:
+        if random_init:
             self.vector_ = eps * \
                 (np.random.random(len(self.categories_)) - 0.5)
         else:
@@ -16,23 +18,19 @@ class Appraisal:
 
     def __add__(self, another):
         res_vector = self.vector_ + another.vector_
-        res_appraisal = Appraisal(*list(res_vector))
-        return res_appraisal
+        return Appraisal(*list(res_vector))
 
     def __sub__(self, another):
         res_vector = self.vector_ - another.vector_
-        res_appraisal = Appraisal(*list(res_vector))
-        return res_appraisal
+        return Appraisal(*list(res_vector))
 
     def __mul__(self, number):
         res_vector = self.vector_ * number
-        res_appraisal = Appraisal(*list(res_vector))
-        return res_appraisal
+        return Appraisal(*list(res_vector))
 
     def __rmul__(self, number):
         res_vector = self.vector_ * number
-        res_appraisal = Appraisal(*list(res_vector))
-        return res_appraisal
+        return Appraisal(*list(res_vector))
 
     def __pow__(self, number):
         res_vector = self.vector_ ** 2

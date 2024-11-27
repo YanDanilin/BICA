@@ -15,27 +15,27 @@ class MS:
 
 
 MSs = {
-    'self': MS('self', np.array([0, 0, 0]), eps=1),
+    'self': MS('self', np.array([0, 0]), eps=15),
     # дружба 1
-    'friendship': MS('friendship', np.array([0, 1, 1]), 0.05),
+    'friendship': MS('friendship', np.array([0, 40]), 5),
     # вражда 1
-    'feud': MS('feud', np.array([1, -1, -1]), 0.05),
+    'feud': MS('feud', np.array([40, -40]), 5),
     # лидерство 2
-    'leadership': MS('leadership', np.array([1, 1, 0.5]), 0.05),
+    'leadership': MS('leadership', np.array([40, 40]), 5),
     # следование 2
-    'following': MS('following', np.array([-1, 1, 1]), 0.05),
+    'following': MS('following', np.array([-40, 40]), 5),
     # партнерство
-    'cooperation': MS('cooperation', np.array([0, 1, 0.8]), 0.05),
+    'cooperation': MS('cooperation', np.array([0, 40]), 5),
     # равнодушие
-    'equinodoses': MS('equinodoses', np.array([0, 0, 0]), 0.05),
+    'equinodoses': MS('equinodoses', np.array([0, 0]), 5),
     # поддержка
-    'supporting': MS('supporting', np.array([0, 1, 0.9]), 0.05),
+    'supporting': MS('supporting', np.array([0, 40]), 5),
     # соперничество
-    'rivalry': MS('rivalry', np.array([0.5, 0.5, 0]), 0.05),
+    'rivalry': MS('rivalry', np.array([35, 33]), 5),
     # осторожность
-    'caution': MS('caution', np.array([0, 0, -0.5]), 0.05),
+    'caution': MS('caution', np.array([0, 0]), 5),
     # контроль
-    'control': MS('control', np.array([1, 0, -1]), 0.05),
+    'control': MS('control', np.array([40, 0]), 5),
     # эмпатия
-    'empathy': MS('empathy', np.array([-0.5, 1, 0.7]), 0.05),
+    'empathy': MS('empathy', np.array([-33, 40]), 5),
 }
