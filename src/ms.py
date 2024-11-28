@@ -9,8 +9,9 @@ class MS:
         self.feeling2 = Appraisal(*feeling2)
         self.eps = eps
 
-    def near(self, appraisal):
-        if (Appraisal.euclidian_dist(self.feeling1, appraisal) < self.eps and Appraisal.euclidian_dist(self.feeling2, appraisal) < self.eps):
+
+    def near(self, appraisal1,appraisal2):
+        if (Appraisal.euclidian_dist(self.feeling1, appraisal1) < self.eps and Appraisal.euclidian_dist(self.feeling2, appraisal2) < self.eps):
             return True
         return False
 

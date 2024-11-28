@@ -3,7 +3,7 @@ import numpy as np
 from agent import Agent
 from appraisal import Appraisal
 from actions import actions2d as actions
-from ms import MS, MSs
+from ms import MS, MSs, near
 
 
 # agents_count = int(input("Enter agents count: "))
@@ -48,6 +48,14 @@ with open('./logs.csv', 'w+') as logf:
                 actions_to = agents[agent_id].send(actions)
                 for receiver_id, action_name in actions_to.items():
                     agents[receiver_id].receive(action_name, agent_id, actions)
+                    
+                    # проверка на срабатывание МС
+                    if (iterations % 10 == 0):
+                        for MS1 in MSs:
+                            if MSs[MS1].near(agents[agent_id], agents[receiver_id]):
+                                #нужно вычеркнуть получателя (сделать это взаимно)
+                                break  #нашли подходящую схему
+                    
                     print(action_name, agents[0].appraisals[1].vector_[0])
                     author_a = \
                         agents[agent_id].appraisals[receiver_id].vector_.tolist()
