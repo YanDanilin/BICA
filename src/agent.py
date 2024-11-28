@@ -11,7 +11,6 @@ class Agent:
         self.r = r
         self.appraisals = dict()
         self.feelings = dict()
-        self.my_feeling
 
     def set_ids(self, ids_list: set):
         '''
@@ -30,7 +29,7 @@ class Agent:
             self.appraisals[id] = Appraisal(random_init=True, eps=0.2)
 
     def set_feeling(self, to_id: int, feeling: Appraisal):
-        self.feelings[to_id] = feeling
+        self.feelings[to_id] = feeling + Appraisal(random_init=True, eps=4)
 
     def send(self, possible_actions: dict):
         receivers = random.sample(

@@ -3,10 +3,8 @@ import numpy as np
 
 
 class Appraisal:
-    def __init__(self, *args, dim=2, random_init=False, eps=0.3):
-        self.categories_ = ['dominance', 'valence']
-        if dim == 3:
-            self.categories_ = ['dominance', 'valence', 'trust']
+    def __init__(self, *args, random_init=False, eps=0.3):
+        self.categories_ = ['dominance', 'valence', 'trust']
         self.vector_ = None
         self.values = None
         if random_init:
