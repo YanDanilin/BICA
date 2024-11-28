@@ -18,6 +18,33 @@ class MS:
             return True
         return False
 
+    feelings = {
+        # дружелюбный
+        'friendly': Appraisal(*[0, 40, 40]),
+        # враждебный
+        'hostility': Appraisal(*[40, -40, -40]),
+        # лидер
+        'leader': Appraisal(*[40, 40, 30]),
+        # подчинённый
+        'subordinate': Appraisal(*[-40, 40, 40]),
+        # партнёр
+        'parthner': Appraisal(*[0, 40, 36]),
+        # равнодушный
+        'indifference': Appraisal(*[0, 0, 0]),
+        # поддержживающий
+        'supporting': Appraisal(*[0, 40, 38]),
+        # соперник
+        'rival': Appraisal(*[35, 33, 0]),
+        # осторожный
+        'careful': Appraisal(*[0, 0, -33]),
+        # контролирующий
+        'controlling': Appraisal(*[40, 0, -40]),
+        # подконтрольный
+        'controlling': Appraisal(*[-40, 0, -37]),
+        # эмпатичный
+        'empathetic': Appraisal(*[-33, 40, 35]),
+    }
+
 
 MSs = {
     'self': MS('self', np.array([0, 0, 0]), np.array([0, 0, 0]), eps=15),
@@ -71,4 +98,5 @@ feelings = {
     'controlled': Appraisal(*[-40, 0, -37]),
     # эмпатичный
     'empathetic': Appraisal(*[-33, 40, 35]),
+    'empathy': MS('empathy', np.array([-33, 40]), 5),
 }

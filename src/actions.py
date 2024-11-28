@@ -32,6 +32,7 @@ actions3d = {
     'hit': {
         'author': [18, 15, -10],
         'target': [-18, -15, -16]
+
     }
 }
 
@@ -67,5 +68,6 @@ actions2d = {
     'hit': {
         'author': [18, 15],
         'target': [-18, -15]
+
     }
 }
