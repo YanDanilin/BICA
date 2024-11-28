@@ -14,7 +14,7 @@ class MS:
             return True
         return False
 
-    feelings = dict{
+    feelings = {
     #дружелюбный
     'friendly' : Appraisal(*[0,40,40]),
     #враждебный
