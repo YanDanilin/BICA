@@ -11,6 +11,7 @@ class Agent:
         self.r = r
         self.appraisals = dict()
         self.feelings = dict()
+        self.my_feeling
 
     def set_ids(self, ids_list: set):
         '''
@@ -37,7 +38,7 @@ class Agent:
         actions_to_receivers = {}
         for r_id in receivers:
             res_action = None
-            max_likelihood = 0
+            max_likelihood = -1
             for action_name, action in possible_actions.items():
                 prob = stats.norm.pdf(Appraisal.euclidian_dist(
                     Appraisal(*action['author']), self.feelings[r_id]))
@@ -47,9 +48,9 @@ class Agent:
             actions_to_receivers[r_id] = res_action
             self.appraisals[r_id] = (1 - self.r) * self.appraisals[r_id] + \
                 self.r * \
-                Appraisal(*list(possible_actions[action_name]['author']))
+                Appraisal(*list(possible_actions[res_action]['author']))
         return actions_to_receivers
 
     def receive(self, action_name, from_id, possible_actions: dict):
         self.appraisals[from_id] = (1 - self.r) * self.appraisals[from_id] + \
-            self.r * Appraisal(*list(possible_actions[action_name]['target']))
+            self.r * Appraisal(*possible_actions[action_name]['target'])

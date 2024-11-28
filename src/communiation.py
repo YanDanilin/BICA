@@ -1,7 +1,8 @@
 import pandas as pd
+import numpy as np
 from agent import Agent
 from appraisal import Appraisal
-from actions import actions
+from actions import actions2d as actions
 from ms import MS, MSs
 
 
@@ -9,6 +10,7 @@ from ms import MS, MSs
 agents_count = 6
 stop_flag = False
 
+print(actions)
 
 fr = 'friendship'
 fe = 'feud'
@@ -33,12 +35,9 @@ for i in range(agents_count):
             agents[i].set_feeling(j, MSs[relation_matrix[i][j]].feeling)
 
 
-print((100 * Appraisal(1, 2, 3) - Appraisal(1, 2, 3)).vector_)
-df = pd.DataFrame()
-
 with open('./logs.csv', 'w+') as logf:
     logf.write(
-        'iteration|from_id|to_id|action_name|action_author_dom|action_author_val|action_author_tr|action_target_dom|action_target_val|action_target_tr|author_dom|author_val|author_tr|target_dom|target_val|target_tr\n')
+        'iteration|from_id|to_id|action_name|action_author_dom|action_author_val|action_target_dom|action_target_val|author_dom|author_val|target_dom|target_val\n')
     total_iterations = 0
     while True:
         iterations = int(input("Enter iterations to communicate: "))
@@ -49,6 +48,7 @@ with open('./logs.csv', 'w+') as logf:
                 actions_to = agents[agent_id].send(actions)
                 for receiver_id, action_name in actions_to.items():
                     agents[receiver_id].receive(action_name, agent_id, actions)
+                    print(action_name, agents[0].appraisals[1].vector_[0])
                     author_a = \
                         agents[agent_id].appraisals[receiver_id].vector_.tolist()
                     target_a = \
@@ -56,5 +56,5 @@ with open('./logs.csv', 'w+') as logf:
                     act_a = actions[action_name]["author"]
                     act_t = actions[action_name]["target"]
                     logf.write(
-                        f'{it}|{agent_id}|{receiver_id}|{action_name}|{act_a[0]}|{act_a[1]}|{act_a[2]}|{act_t[0]}|{act_t[1]}|{act_t[2]}|{author_a[0]}|{author_a[1]}|{author_a[2]}|{target_a[0]}|{target_a[1]}|{target_a[2]}\n')
+                        f'{it}|{agent_id}|{receiver_id}|{action_name}|{act_a[0]}|{act_a[1]}|{act_t[0]}|{act_t[1]}|{author_a[0]}|{author_a[1]}|{target_a[0]}|{target_a[1]}\n')
         total_iterations += iterations
