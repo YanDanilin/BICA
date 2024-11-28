@@ -51,7 +51,25 @@ with open('./logs.csv', 'w+') as logf:
                 actions_to = agents[agent_id].send(actions)
                 for receiver_id, action_name in actions_to.items():
                     log_row.append(str(receiver_id))
-                    agents[receiver_id].receive(action_name, agent_id, actions)
+                    agents[receiver_id].receive(action_name, agent_id, actions)                    
+                    # проверка на срабатывание МС
+                    if (iterations % 10 == 0):
+                        for MS1 in MSs:
+                            flag = False
+                            if MSs[MS1].near(agents[agent_id]) and MSs[MS1].near(agents[agent_id], agents[receiver_id]):
+                                MS2 = MS1
+                            if MSs[MS1].find(agents[agent_id], agents[receiver_id]):
+                                flag = True
+                                break  #нашли подходящую схему
+                        if flag == False:
+                            agents[receiver_id].appraisals[agent_id] = MSs[MS2].get_feel_2()
+                    print(action_name, agents[0].appraisals[1].vector_[0])
+                    author_a = \
+                        agents[agent_id].appraisals[receiver_id].vector_.tolist()
+                    target_a = \
+                        agents[receiver_id].appraisals[agent_id].vector_.tolist()
+                    act_a = actions[action_name]["author"]
+                    act_t = actions[action_name]["target"]
                     log_row += list(map(str, agents[agent_id].appraisals[receiver_id].vector_.tolist()))
                     log_row += list(map(str, agents[receiver_id].appraisals[agent_id].vector_.tolist()))
                     log_row += list(map(str, actions[action_name]["author"]))

@@ -13,10 +13,27 @@ class MS:
         self.feeling2 = Appraisal(*feeling2)
         self.eps = eps
 
-    def near(self, appraisal):
-        if (Appraisal.euclidian_dist(self.feeling1, appraisal) < self.eps and Appraisal.euclidian_dist(self.feeling2, appraisal) < self.eps):
+    def get_feel_1(self):
+        return self.feeling1
+    
+    def get_feel_2(self):
+        return self.feeling2
+
+    def find(self, appraisal1,appraisal2):
+        if (Appraisal.euclidian_dist(self.feeling1, appraisal1) < self.eps and Appraisal.euclidian_dist(self.feeling2, appraisal2) < self.eps):
             return True
         return False
+    
+    def near(self, appraisal1,appraisal2):
+        if (Appraisal.euclidian_dist(self.feeling1, appraisal1)  < Appraisal.euclidian_dist(self.feeling2, appraisal2) ):
+            return True
+        return False
+    
+    def near(self, appraisal1,):
+        if (Appraisal.euclidian_dist(self.feeling1, appraisal1) < self.eps):
+            return True
+        return False
+        
 
     feelings = {
         # дружелюбный
