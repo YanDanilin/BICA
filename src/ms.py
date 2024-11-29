@@ -29,7 +29,7 @@ class MS:
             return True
         return False
     
-    def near(self, appraisal1,):
+    def near(self, appraisal1):
         if (Appraisal.euclidian_dist(self.feeling1, appraisal1) < self.eps):
             return True
         return False
