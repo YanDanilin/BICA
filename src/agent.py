@@ -11,6 +11,7 @@ class Agent:
         self.r = r
         self.appraisals = dict()
         self.feelings = dict()
+        self.moral_schemas = None
 
     def set_ids(self, ids_list: set):
         '''
@@ -23,6 +24,7 @@ class Agent:
         af_list = [Appraisal(random_init=True, eps=0.2)
                    for _ in range(len(self.other_ids))]
         self.appraisals = dict(zip(self.other_ids, af_list))
+        self.moral_schemas = [['self'] * len(ids_list)] * len(ids_list)
 
     def set_id(self, id):
         if self.other_ids is not None and id not in self.appraisals:
@@ -39,7 +41,7 @@ class Agent:
             res_action = None
             max_likelihood = -1
             for action_name, action in possible_actions.items():
-                prob = stats.norm.pdf(Appraisal.euclidian_dist(
+                prob = stats.norm.pdf(Appraisal.euclidean_dist(
                     Appraisal(*action['author']), self.feelings[r_id]))
                 if prob > max_likelihood:
                     max_likelihood = prob
@@ -53,3 +55,6 @@ class Agent:
     def receive(self, action_name, from_id, possible_actions: dict):
         self.appraisals[from_id] = (1 - self.r) * self.appraisals[from_id] + \
             self.r * Appraisal(*possible_actions[action_name]['target'])
+            
+    def appraisal_near_feeling(self, target_id):
+        return Appraisal.euclidean_dist(self.appraisals[target_id], self.feelings[target_id]) < self.feelings[target_id].eps

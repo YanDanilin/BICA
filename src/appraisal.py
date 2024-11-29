@@ -35,5 +35,6 @@ class Appraisal:
         return Appraisal(*res_vector)
 
     @staticmethod
-    def euclidian_dist(a1, a2):
+    def euclidean_dist(a1, a2):
         return np.sqrt(np.sum((a1.vector_ - a2.vector_) ** 2))
+

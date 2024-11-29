@@ -1,9 +1,6 @@
 import numpy as np
 from appraisal import Appraisal
-
-
-import numpy as np
-from appraisal import Appraisal
+from agent import Agent
 
 
 class MS:
@@ -13,54 +10,45 @@ class MS:
         self.feeling2 = Appraisal(*feeling2)
         self.eps = eps
 
-    def get_feel_1(self):
-        return self.feeling1
-    
-    def get_feel_2(self):
-        return self.feeling2
+    def is_appropriate_ms(self, appraisal1, appraisal2):
+        return Appraisal.euclidean_dist(self.feeling1, appraisal1) < self.eps and Appraisal.euclidean_dist(self.feeling2, appraisal2) < self.eps
 
-    def find(self, appraisal1,appraisal2):
-        if (Appraisal.euclidian_dist(self.feeling1, appraisal1) < self.eps and Appraisal.euclidian_dist(self.feeling2, appraisal2) < self.eps):
-            return True
-        return False
-    
-    def near(self, appraisal1,appraisal2):
-        if (Appraisal.euclidian_dist(self.feeling1, appraisal1)  < Appraisal.euclidian_dist(self.feeling2, appraisal2) ):
-            return True
-        return False
-    
-    def near(self, appraisal1):
-        if (Appraisal.euclidian_dist(self.feeling1, appraisal1) < self.eps):
-            return True
-        return False
-        
+    def both_near_feelings(self, appraisal1, appraisal2):
+        return Appraisal.euclidean_dist(self.feeling1, appraisal1) < Appraisal.euclidean_dist(self.feeling2, appraisal2)
 
-    feelings = {
-        # дружелюбный
-        'friendly': Appraisal(*[0, 40, 40]),
-        # враждебный
-        'hostility': Appraisal(*[40, -40, -40]),
-        # лидер
-        'leader': Appraisal(*[40, 40, 30]),
-        # подчинённый
-        'subordinate': Appraisal(*[-40, 40, 40]),
-        # партнёр
-        'parthner': Appraisal(*[0, 40, 36]),
-        # равнодушный
-        'indifference': Appraisal(*[0, 0, 0]),
-        # поддержживающий
-        'supporting': Appraisal(*[0, 40, 38]),
-        # соперник
-        'rival': Appraisal(*[35, 33, 0]),
-        # осторожный
-        'careful': Appraisal(*[0, 0, -33]),
-        # контролирующий
-        'controlling': Appraisal(*[40, 0, -40]),
-        # подконтрольный
-        'controlling': Appraisal(*[-40, 0, -37]),
-        # эмпатичный
-        'empathetic': Appraisal(*[-33, 40, 35]),
-    }
+    def near_feeling1(self, appraisal):
+        return Appraisal.euclidean_dist(self.feeling1, appraisal) < self.eps
+
+    def near_feeling2(self, appraisal):
+        return Appraisal.euclidean_dist(self.feeling2, appraisal) < self.eps
+
+
+feelings = {
+    # дружелюбный
+    'friendly': Appraisal(*[0, 40, 40]),
+    # враждебный
+    'hostility': Appraisal(*[40, -40, -40]),
+    # лидер
+    'leader': Appraisal(*[40, 40, 30]),
+    # подчинённый
+    'subordinate': Appraisal(*[-40, 40, 40]),
+    # партнёр
+    'parthner': Appraisal(*[0, 40, 36]),
+    # равнодушный
+    'indifference': Appraisal(*[0, 0, 0]),
+    # поддержживающий
+    'supporting': Appraisal(*[0, 40, 38]),
+    # соперник
+    'rival': Appraisal(*[35, 33, 0]),
+    # осторожный
+    'careful': Appraisal(*[0, 0, -33]),
+    # контролирующий
+    'controlling': Appraisal(*[40, 0, -40]),
+    # подконтрольный
+    'controlling': Appraisal(*[-40, 0, -37]),
+    # эмпатичный
+    'empathetic': Appraisal(*[-33, 40, 35]),
+}
 
 
 MSs = {
@@ -90,30 +78,19 @@ MSs = {
 }
 
 
-feelings = {
-    # дружелюбный
-    'friendly': Appraisal(*[0, 40, 40]),
-    # враждебный
-    'hostility': Appraisal(*[40, -40, -40]),
-    # лидер
-    'leader': Appraisal(*[40, 40, 30]),
-    # подчинённый
-    'subordinate': Appraisal(*[-40, 40, 40]),
-    # партнёр
-    'partner': Appraisal(*[0, 40, 36]),
-    # равнодушный
-    'indifference': Appraisal(*[0, 0, 0]),
-    # поддержживающий
-    'supporting': Appraisal(*[0, 40, 38]),
-    # соперник
-    'rival': Appraisal(*[35, 33, 0]),
-    # осторожный
-    'careful': Appraisal(*[0, 0, -33]),
-    # контролирующий
-    'supervisory': Appraisal(*[40, 0, -40]),
-    # подконтрольный
-    'controlled': Appraisal(*[-40, 0, -37]),
-    # эмпатичный
-    'empathetic': Appraisal(*[-33, 40, 35]),
-    'empathy': MS('empathy', np.array([-33, 40]), 5),
-}
+def check_moral_schema(author: Agent, target: Agent):
+    author_a, target_a = author.appraisals[target.id], target.appraisals[author.id]
+    for ms_name, moral_schema in MSs.items():
+        if moral_schema.is_appropriate_ms(author_a, target_a):
+            return 'ms', author.id, target.id, ms_name
+        if moral_schema.is_appropriate_ms(target_a, author_a):
+            return 'ms', target.id, author.id, ms_name
+        if moral_schema.near_feeling1(author_a) and not moral_schema.near_feeling2(target_a):
+            return 'change', target.id, author.id, moral_schema.feeling2
+        elif moral_schema.near_feeling2(author_a) and not moral_schema.near_feeling1(target_a):
+            return 'change', target.id, author.id, moral_schema.feeling1
+        elif moral_schema.near_feeling1(target_a) and not moral_schema.near_feeling2(author_a):
+            return 'change', author.id, target.id, moral_schema.feeling2
+        elif moral_schema.near_feeling2(target_a) and not moral_schema.near_feeling1(author_a):
+            return 'change', author.id, target.id, moral_schema.feeling1
+    return -1
