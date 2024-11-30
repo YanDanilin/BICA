@@ -1,12 +1,14 @@
 import random
 import numpy as np
+from scipy.spatial import distance
 
 
 class Appraisal:
     def __init__(self, *args, random_init=False, eps=0.3):
-        self.categories_ = ['dominance', 'valence', 'trust']
+        self.categories_ = ['dominance', 'valence']  # временно 2 измерения
         self.vector_ = None
         self.values = None
+        self.eps = eps
         if random_init:
             self.vector_ = eps * \
                 (np.random.random(len(self.categories_)) - 0.5)
@@ -38,3 +40,6 @@ class Appraisal:
     def euclidean_dist(a1, a2):
         return np.sqrt(np.sum((a1.vector_ - a2.vector_) ** 2))
 
+    @staticmethod
+    def cosine_dist(a1, a2):
+        return distance.cosine(a1.vector_, a2.vector_)

@@ -2,72 +2,71 @@ import numpy as np
 
 actions3d = {
     'hi': {
-        'author': [0, 10, 15],
-        'target': [0, 15, 10]
+        'author': [2, 10, 15],
+        'target': [2, 10, 15]
     },
     'ignor': {
         'author': [10, -15, -10],
-        'target': [0, -10, -15]
+        'target': [5, -10, -15]
     },
     'insult': {
         'author': [15, -13, -14],
-        'target': [-15, -12, -17]
+        'target': [-12, -12, -17]
     },
     'talk': {
-        'author': [0, 17, 15],
-        'target': [0, 17, 15]
+        'author': [5, 17, 15],
+        'target': [5, 17, 15]
     },
     'help': {
         'author': [12, 19, 12],
-        'target': [-12, 17, 20]
+        'target': [-7, 17, 20]
     },
     'lie': {
-        'author': [17, -10, 0],
+        'author': [-17, -10, -10],
         'target': [-13, -17, -14]
     },
     'kick': {
         'author': [20, 15, -10],
-        'target': [-20, -15, -17]
+        'target': [-15, -10, -17]
     },
     'hit': {
         'author': [18, 15, -10],
-        'target': [-18, -15, -16]
-
+        'target': [-12, -10, -16]
     }
 }
 
 actions2d = {
-    'hi': {
-        'author': [0, 10],
-        'target': [0, 15]
+    'act1': {
+        'author': [14, 14],
+        'target': [-7, 7]
     },
-    'ignor': {
-        'author': [10, -15],
+    'act2': {
+        'author': [0, 20],
+        'target': [10, 0]
+    },
+    'act3': {
+        'author': [-14, 14],
+        'target': [7, 7]
+    },
+    'act4': {
+        'author': [-29, 0],
+        'target': [0, 10]
+    },
+    'act5': {
+        'author': [-14, -14],
+        'target': [-7, 7]
+    },
+    'act6': {
+        'author': [0, -20],
+        'target': [-10, 0]
+    },
+    'act7': {
+        'author': [14, -14],
+        'target': [-7, -7]
+    },
+    'act8': {
+        'author': [20, 0],
         'target': [0, -10]
-    },
-    'insult': {
-        'author': [15, -13],
-        'target': [-15, -12]
-    },
-    'talk': {
-        'author': [0, 17],
-        'target': [0, 17]
-    },
-    'help': {
-        'author': [12, 19],
-        'target': [-12, 17]
-    },
-    'lie': {
-        'author': [17, -10],
-        'target': [-13, -17]
-    },
-    'kick': {
-        'author': [20, 15],
-        'target': [-20, -15]
-    },
-    'hit': {
-        'author': [18, 15],
-        'target': [-18, -15]
 
     }
 }
