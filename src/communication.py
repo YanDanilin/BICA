@@ -22,7 +22,7 @@ for i in range(agents_count):
     agents[i].set_ids(set(range(agents_count)))
     for j in range(agents_count):
         if i != j:
-            agents[i].set_feeling(j, feelings[init_feelings[j]])
+            agents[i].set_feeling(j, feelings[init_feelings[i]])
 
 
 with open('./logs.csv', 'w+') as logf:
@@ -96,7 +96,6 @@ with open('./res_feelings.csv', 'w+') as res_file:
                 appraisal_vec = agents[agent_id].appraisals[to_id].vector_
                 feelings_vec = agents[agent_id].feelings[to_id].vector_
                 res_file.write(
-                    f'{agent_id}|{to_id}|{appraisal_vec[0]}|{appraisal_vec[1]}|')  # {appraisal_vec[2]}|
+                    f'{agent_id}|{to_id}|{appraisal_vec[0]}|{appraisal_vec[1]}|')
                 res_file.write(
                     f'{feelings_vec[0]}|{feelings_vec[1]}|{agents[agent_id].moral_schemas[agent_id][to_id]}|{agents[agent_id].moral_schemas[to_id][agent_id]}\n')
-                # {feelings_vec[2]}|

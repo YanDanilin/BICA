@@ -113,7 +113,7 @@ MSs2d = {
     # лидерство 2
     'leadership': MS('leadership', np.array([40, 40]), np.array([-40, -40]), 6),
     # следование 2
-    # 'following': MS('following', np.array([-40, 40]), 5),
+    # 'following': MS('following', np.array([-40, 40]), np.array([-40, 40]), 5),
     # партнерство
     # 'cooperation': MS('cooperation', np.array([0, 40]), np.array([0, 40]), 6),
     # # равнодушие

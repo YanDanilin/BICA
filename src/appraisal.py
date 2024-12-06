@@ -33,7 +33,7 @@ class Appraisal:
         return Appraisal(*list(res_vector))
 
     def __pow__(self, number):
-        res_vector = self.vector_ ** 2
+        res_vector = self.vector_ ** number
         return Appraisal(*res_vector)
 
     @staticmethod

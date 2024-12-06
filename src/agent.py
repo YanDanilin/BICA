@@ -45,8 +45,6 @@ class Agent:
             res_action = None
             max_likelihood = -1
             for action_name, action in possible_actions.items():
-                # prob = stats.norm.pdf(Appraisal.euclidean_dist(
-                #     Appraisal(*action['author']), self.feelings[r_id]))
                 prob = stats.norm.pdf(Appraisal.cosine_dist(
                     Appraisal(*action['author']), self.feelings[r_id] - self.appraisals[r_id]))
                 if prob > max_likelihood:

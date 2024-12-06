@@ -7,9 +7,11 @@ from actions import actions2d as actions
 
 logdf = pd.read_csv('./logs.csv', sep='|')
 
-one, two = 0, 1
-df = logdf[(logdf['from_id'] == one) & (logdf['to_id'] == two)]
 
+from_id, to_id = 0, 1
+
+df = logdf[(logdf['from_id'] == from_id) & (logdf['to_id'] == to_id)]
+print(df)
 path0_dom, path0_val = [], []
 path1_dom, path1_val = [], []
 for i, row in df.iterrows():
@@ -31,27 +33,35 @@ observations = []
 for i, row in df.iterrows():
     observations.append(actions_encoded[row['action_name']])
 observations = np.array(observations)
+
+print('observations - ', observations)
 states_list = list(feelings.keys())
 n_emits = len(list(actions.keys()))
-n_states = len(list(feelings.keys()))
+n_states = len(states_list)
 emission_probs = np.ones((n_states, n_emits))
-for i in range(n_states):
-    row = []
-    for j in range(n_emits):
-        row.append(1 / (Appraisal.cosine_dist(Appraisal(*actions[actions_list[j]]['author']), feelings[states_list[i]]) + 0.0001))
+for i_state, state in enumerate(states_list):
+    row = [0] * n_emits
+    for action, action_label in actions_encoded.items():
+        row[action_label] = (
+            1 / (Appraisal.cosine_dist(Appraisal(*actions[action]['author']), feelings[state]) + 0.00001))
     row = np.array(row)
     row /= np.sum(row)
-    for j in range(n_emits):
-        emission_probs[i][j] = row[j]
+    for action, action_label in actions_encoded.items():
+        emission_probs[i_state][action_label] = row[action_label]
 
-model = hmm.CategoricalHMM(n_components=len(feelings), n_iter=logdf.shape[0])
+print("Actions encoded - ", actions_encoded)
+print("Emission probs - ", emission_probs)
+print(emission_probs[1].sum())
+
+model = hmm.CategoricalHMM(n_components=len(
+    feelings), n_iter=logdf.shape[0], params='s', init_params='s')
 model.startprob_ = np.ones(n_states) / n_states
 model.transmat_ = np.ones((n_states, n_states)) / n_states
-emission_probs = np.array(())
 model.emissionprob_ = emission_probs
 
 model.fit(observations.reshape(-1, 1))
 preds = model.predict(observations.reshape(-1, 1))
 print(preds)
+print(preds.shape)
 print(states_list[preds[-1]])
 print(model.predict_proba(observations.reshape(-1, 1)))
