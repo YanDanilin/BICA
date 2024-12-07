@@ -89,7 +89,7 @@ with open('./logs.csv', 'w+') as logf:
 
 with open('./res_feelings.csv', 'w+') as res_file:
     res_file.write(
-        'from_id|to_id|app1|app2|app3|feeling1|feeling2|feeling3|moral_scheme_first|moral_scheme_second\n')
+        'from_id|to_id|app1|app2|app3|feeling1|feeling2|feeling3\n')
     for agent_id in range(agents_count):
         for to_id in range(agents_count):
             if agent_id != to_id:
